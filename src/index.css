@@ -1,1 +1,262 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "google-calendar";
+  default: false;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: #ffffff;
+  --color-base-200: #f8f9fa;
+  --color-base-300: #e8eaed;
+  --color-base-content: #202124;
+  --color-primary: #1a73e8;
+  --color-primary-content: #ffffff;
+  --color-secondary: #5f6368;
+  --color-secondary-content: #ffffff;
+  --color-accent: #34a853;
+  --color-accent-content: #ffffff;
+  --color-neutral: #5f6368;
+  --color-neutral-content: #ffffff;
+  --color-info: #1a73e8;
+  --color-info-content: #ffffff;
+  --color-success: #34a853;
+  --color-success-content: #ffffff;
+  --color-warning: #fbbc04;
+  --color-warning-content: #202124;
+  --color-error: #ea4335;
+  --color-error-content: #ffffff;
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+/* Google Calendar specific styles */
+.rbc-calendar {
+  font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+  background-color: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.12);
+}
+
+.rbc-today {
+  background-color: #e8f0fe !important;
+  border-radius: 4px;
+}
+
+.rbc-event {
+  background-color: #1a73e8 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
+  cursor: pointer;
+}
+
+.rbc-event:hover {
+  background-color: #1557b0 !important;
+  box-shadow: 0 2px 6px rgba(60, 64, 67, 0.4);
+}
+
+/* Event colors similar to Google Calendar */
+.rbc-event.event-blue { background-color: #1a73e8 !important; }
+.rbc-event.event-green { background-color: #34a853 !important; }
+.rbc-event.event-orange { background-color: #f9ab00 !important; }
+.rbc-event.event-red { background-color: #ea4335 !important; }
+.rbc-event.event-purple { background-color: #9c27b0 !important; }
+
+.rbc-time-slot {
+  border-top: 1px solid #f1f3f4 !important;
+  background-color: #ffffff !important;
+}
+
+.rbc-time-content,
+.rbc-label,
+.rbc-header {
+  color: #3c4043 !important;
+  font-weight: 400 !important;
+}
+
+.rbc-label {
+  font-size: 11px !important;
+  color: #5f6368 !important;
+  padding: 0 8px !important;
+}
+
+.rbc-time-view {
+  border: none;
+  font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+  font-size: 13px;
+}
+
+.rbc-timeslot-group {
+  border-bottom: 1px solid #f1f3f4;
+  min-height: 48px;
+}
+
+.rbc-time-header {
+  border-bottom: 1px solid #dadce0;
+  background-color: #ffffff;
+  padding: 16px 0 8px 0;
+}
+
+.rbc-time-header .rbc-header {
+  background-color: transparent !important;
+  border: none !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  color: #3c4043 !important;
+  text-align: center;
+  padding: 8px 4px;
+}
+
+.rbc-time-content > * + * {
+  border-left: 1px solid #f1f3f4;
+}
+
+.rbc-header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #f1f3f4 !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  padding: 12px 8px !important;
+}
+
+/* Navigation buttons */
+.rbc-btn-group button {
+  background-color: #ffffff !important;
+  color: #1a73e8 !important;
+  border: 1px solid #dadce0 !important;
+  padding: 8px 16px !important;
+  margin-right: 8px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rbc-btn-group button:hover {
+  background-color: #f8f9fa !important;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.12);
+}
+
+.rbc-btn-group button:active,
+.rbc-btn-group button.rbc-active {
+  background-color: #e8f0fe !important;
+  border-color: #1a73e8 !important;
+}
+
+.rbc-btn-group button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  background-color: #f8f9fa !important;
+  color: #5f6368 !important;
+}
+
+/* Month view styles */
+.rbc-month-view {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rbc-date-cell {
+  padding: 8px;
+  font-size: 13px;
+  color: #3c4043;
+}
+
+.rbc-date-cell.rbc-off-range {
+  color: #9aa0a6;
+}
+
+.rbc-date-cell.rbc-today {
+  background-color: #e8f0fe;
+  font-weight: 600;
+}
+
+/* Week view adjustments */
+.rbc-time-gutter {
+  width: 64px;
+}
+
+.rbc-time-gutter .rbc-timeslot-group {
+  border-right: 1px solid #f1f3f4;
+}
+
+/* Agenda view */
+.rbc-agenda-view {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+}
+
+.rbc-agenda-view table {
+  border-spacing: 0;
+}
+
+.rbc-agenda-view td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+/* Dark mode support */
+.dark .rbc-calendar {
+  background-color: #1f1f1f;
+  border-color: #5f6368;
+  color: #e8eaed;
+}
+
+.dark .rbc-today {
+  background-color: #1a73e8 !important;
+  opacity: 0.1;
+}
+
+.dark .rbc-time-slot {
+  background-color: #1f1f1f !important;
+  border-color: #5f6368 !important;
+}
+
+.dark .rbc-time-content,
+.dark .rbc-label,
+.dark .rbc-header {
+  color: #e8eaed !important;
+}
+
+.dark .rbc-time-header {
+  background-color: #1f1f1f;
+  border-color: #5f6368;
+}
+
+.dark .rbc-timeslot-group {
+  border-color: #5f6368;
+}
+
+.dark .rbc-time-content > * + * {
+  border-color: #5f6368;
+}
+
+.dark .rbc-header {
+  background-color: #1f1f1f !important;
+  border-color: #5f6368 !important;
+}
+
+.dark .rbc-btn-group button {
+  background-color: #1f1f1f !important;
+  color: #8ab4f8 !important;
+  border-color: #5f6368 !important;
+}
+
+.dark .rbc-btn-group button:hover {
+  background-color: #313235 !important;
+}
