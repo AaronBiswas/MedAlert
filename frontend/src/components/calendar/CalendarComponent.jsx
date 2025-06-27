@@ -1,10 +1,7 @@
-// CalendarComponent.jsx
 import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import "../../index.css"; // Import the Google Calendar styles
-
 import enUS from "date-fns/locale/en-US";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const locales = { "en-US": enUS };
 
@@ -18,14 +15,14 @@ const localizer = dateFnsLocalizer({
 
 const events = [
   {
-    title: "10:00 AM - Reminder 1",
+    title: "10:00 AM – Reminder 1",
     start: new Date(2025, 5, 25, 10, 0),
     end: new Date(2025, 5, 25, 11, 0),
     className: "event-blue",
     allDay: false,
   },
   {
-    title: "2:00 PM - Reminder 2", 
+    title: "2:00 PM – Reminder 2",
     start: new Date(2025, 5, 27, 14, 0),
     end: new Date(2025, 5, 27, 15, 0),
     className: "event-green",
@@ -35,11 +32,9 @@ const events = [
 
 export default function CalendarComponent() {
   return (
-    <div className="rounded-lg shadow-sm p-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
-      <h2 className="text-xl font-medium mb-6 text-gray-900 dark:text-white font-['Google_Sans',_'Roboto',_sans-serif]">
-        This Week
-      </h2>
-      <div className="h-[600px] rounded-lg overflow-hidden">
+    <div className="w-full bg-white shadow-lg rounded-2xl p-6 border border-gray-200">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Calendar Overview</h2>
+      <div className="h-[600px] overflow-hidden rounded-md border border-gray-100">
         <Calendar
           localizer={localizer}
           events={events}
@@ -47,14 +42,26 @@ export default function CalendarComponent() {
           views={["month"]}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: "100%" }}
+          style={{ height: "100%", backgroundColor: "white" }}
           eventPropGetter={(event) => ({
             className: event.className,
+            style: {
+              backgroundColor:
+                event.className === "event-blue"
+                  ? "#3b82f6"
+                  : event.className === "event-green"
+                  ? "#10b981"
+                  : "#6366f1",
+              color: "white",
+              borderRadius: "6px",
+              padding: "4px 8px",
+              fontSize: "0.875rem",
+            },
           })}
           formats={{
             eventTimeRangeFormat: () => "",
             timeGutterFormat: (date, culture, localizer) =>
-              localizer.format(date, "h:mm A", culture),
+              localizer.format(date, "h:mm a", culture),
           }}
         />
       </div>

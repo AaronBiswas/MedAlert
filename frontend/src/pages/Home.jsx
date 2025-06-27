@@ -6,15 +6,11 @@ import Prescriptions from "../components/Prescriptions";
 
 const Home = () => {
   return (
-    <div>
+    <div className="px-8 py-6 space-y-8 bg-gray-50 min-h-screen">
       <Dashboard />
-      <div>
-        <div>
-          <Reminder />
-        </div>
-        <div>
-          <Medlist />
-        </div>
+      <div className="flex flex-col md:flex-row gap-6 justify-around">
+        <Reminder />
+        <Medlist />
       </div>
       <Prescriptions />
     </div>
