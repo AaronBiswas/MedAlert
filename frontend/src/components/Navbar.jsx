@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogin = (e) => {
+    e.preventDefault();
+    navigate("/login");
+  };
+
   return (
     <nav className="w-full bg-white shadow-md border-b border-gray-200 px-6 py-4 h-20">
       <div className="flex items-center justify-between max-w-7xl mx-auto h-full">
@@ -11,7 +18,14 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <ul className="hidden lg:flex items-center gap-8 text-xl font-medium text-gray-700">
-          <li className="hover:text-blue-600 cursor-pointer">Home</li>
+          <li
+            className="hover:text-blue-600 cursor-pointer"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Home
+          </li>
         </ul>
 
         {/* Mobile Menu Toggle */}
@@ -36,13 +50,17 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white border border-gray-200 rounded-box w-52"
           >
-            <li><a>Home</a></li>
+            <li>
+              <a>Home</a>
+            </li>
           </ul>
         </div>
 
         {/* Button / Action */}
         <div className="hidden lg:block">
-          <button className="btn btn-primary btn-md">Login</button>
+          <button className="btn btn-primary btn-md" onClick={handleLogin}>
+            Login
+          </button>
         </div>
       </div>
     </nav>
