@@ -6,6 +6,6 @@ import { protectRoute } from "../middleware/Auth.js";
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
 
-router.post("/file",protectRoute, upload.single("file"), uploadFile);
+router.post("/file", upload.single("file"), uploadFile);
 
 export default router;

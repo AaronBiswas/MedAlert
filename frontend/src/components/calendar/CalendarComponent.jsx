@@ -2,6 +2,8 @@ import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import enUS from "date-fns/locale/en-US";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const locales = { "en-US": enUS };
 
@@ -13,27 +15,30 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const events = [
-  {
-    title: "10:00 AM – Reminder 1",
-    start: new Date(2025, 5, 25, 10, 0),
-    end: new Date(2025, 5, 25, 11, 0),
-    className: "event-blue",
-    allDay: false,
-  },
-  {
-    title: "2:00 PM – Reminder 2",
-    start: new Date(2025, 5, 27, 14, 0),
-    end: new Date(2025, 5, 27, 15, 0),
-    className: "event-green",
-    allDay: false,
-  },
-];
-
 export default function CalendarComponent() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/data/reminder`, { withCredentials: true })
+      .then((res) => {
+        const reminders = res.data.map((entry) => ({
+          title: `${entry.time} – ${entry.medicine}`,
+          start: new Date(entry.startDate),
+          end: new Date(entry.endDate),
+          className: "event-blue",
+          allDay: false,
+        }));
+        setEvents(reminders);
+      })
+      .catch((err) => console.error("Failed to load reminders", err));
+  }, []);
+
   return (
     <div className="w-full bg-white shadow-lg rounded-2xl p-6 border border-gray-200">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Calendar Overview</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Calendar Overview
+      </h2>
       <div className="h-[600px] overflow-hidden rounded-md border border-gray-100">
         <Calendar
           localizer={localizer}

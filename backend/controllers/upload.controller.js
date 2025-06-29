@@ -10,8 +10,14 @@ export const uploadFile = (req, res) => {
       .json({ success: false, message: "No file uploaded" });
   }
 
-  const filePath = path.join("uploads", req.file.filename);
-  const scriptPath = path.resolve("..", "parse_csv.py");
+  if (!req.userId) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Unauthorized: user not found" });
+  }
+
+  const filePath = path.join(process.cwd(), "uploads", req.file.filename);
+  const scriptPath = path.join(process.cwd(), "parse_csv.py");
   const py = spawn("python", [scriptPath, filePath]);
 
   let dataBuffer = "";
@@ -29,7 +35,7 @@ export const uploadFile = (req, res) => {
       const parsed = JSON.parse(dataBuffer);
       fs.unlinkSync(filePath);
 
-      const userId = req.user._id;
+      const userId = req.userId;
 
       // Expected fields: medicine, dosage, time, startDate, endDate
       const inserts = parsed.map((row) => ({

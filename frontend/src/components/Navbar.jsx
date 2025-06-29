@@ -16,6 +16,11 @@ const Navbar = () => {
     navigate("/signup");
   };
 
+  const handleLogout=(e)=>{
+    e.preventDefault();
+    logout();
+  }
+
   return (
     <nav className="w-full bg-white shadow-md border-b border-gray-200 px-6 py-4 h-20">
       <div className="flex items-center justify-between max-w-7xl mx-auto h-full">
@@ -40,7 +45,7 @@ const Navbar = () => {
 
         <div className="hidden lg:flex justify-around gap-4">
           {isLoggedIn ? (
-            <button className="btn btn-error btn-md" onClick={logout}>
+            <button className="btn btn-error btn-md" onClick={handleLogout}>
               Logout
             </button>
           ) : (

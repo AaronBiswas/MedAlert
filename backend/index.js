@@ -4,7 +4,9 @@ import connectDB from "./db/database.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.route.js";
 import uploadRoutes from "./routes/upload.route.js";
+import reminderRoutes from "./routes/reminder.route.js";
 import cors from "cors";
+import { protectRoute } from "./middleware/Auth.js";
 
 dotenv.config();
 
@@ -23,7 +25,8 @@ app.use(cookieParser())
 
 
 app.use("/user",userRoutes)
-app.use("/upload",uploadRoutes)
+app.use("/upload",protectRoute,uploadRoutes)
+app.use("/data",reminderRoutes);
 
 app.get("/", (_, res) => {
   return res.send("Hello World!");

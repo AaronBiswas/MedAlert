@@ -7,6 +7,7 @@ import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Uploader from "./pages/Uploader.jsx";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 const App = () => {
   return (
@@ -17,7 +18,14 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/upload" element={<Uploader />} />
+        <Route
+          path="/upload"
+          element={
+            <ProtectedRoute>
+              <Uploader />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );

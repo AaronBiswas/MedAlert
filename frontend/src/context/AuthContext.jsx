@@ -8,15 +8,23 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = Cookies.get("jwt");
-    setIsLoggedIn(!!token);
+    if(token) setIsLoggedIn(true);
   }, []);
 
   const login = () => setIsLoggedIn(true);
 
   const logout = () => {
-    Cookies.remove("jwt");
+    Cookies.remove("jwt",{
+      path:"/",
+      sameSite:"none",
+      secure:true
+    });
     setIsLoggedIn(false);
   };
+
+  useEffect(() => {
+    console.log("Auth state changed:", isLoggedIn);
+  }, [isLoggedIn]);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
