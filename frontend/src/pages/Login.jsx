@@ -1,19 +1,22 @@
-import React from "react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [userdata, setUserdata] = useState({
     email: "",
     password: "",
   });
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserdata({ ...userdata, [name]: value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -23,12 +26,14 @@ const Login = () => {
       });
 
       if (response.data.success) {
-        console.log("User logged In!");
-        localStorage.setItem("jwt", response.data.token);
+        login();
+        toast.success("Welcome! User");
         navigate("/");
       }
     } catch (error) {
-      console.error("Login error:", error);
+      const msg = error?.response?.data?.message || "Login failed";
+      toast.error(msg);
+      console.error("Login error:", msg);
     }
   };
 
@@ -53,6 +58,7 @@ const Login = () => {
                 className="input input-bordered w-full"
                 value={userdata.email}
                 onChange={handleChange}
+                required
               />
             </div>
 
@@ -67,6 +73,7 @@ const Login = () => {
                 className="input input-bordered w-full"
                 value={userdata.password}
                 onChange={handleChange}
+                required
               />
               <label className="label">
                 <a

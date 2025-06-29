@@ -1,23 +1,25 @@
 import axios from "axios";
-import React from "react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthContext } from "../context/AuthContext";
 
 const Signup = () => {
-  const[signupdata,setSignupdata]=useState({
-    fullname:"",
-    email:"",
-    password:""
-  })
+  const [signupdata, setSignupdata] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+  });
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSignupdata({ ...signupdata, [name]: value });
   };
 
-  const handleSubmit=async(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       let newUrl = `${import.meta.env.VITE_API_URL}/user/signup`;
@@ -26,15 +28,16 @@ const Signup = () => {
       });
 
       if (response.data.success) {
-        console.log("User created!");
+        login();
+        toast.success("Signup Successful!");
         localStorage.setItem("jwt", response.data.token);
         navigate("/");
       }
     } catch (error) {
       console.error("Signup error:", error);
+      toast.error("Signup Failed!");
     }
-  }
-
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-base-200 px-4">
@@ -80,7 +83,7 @@ const Signup = () => {
               </label>
               <input
                 type="password"
-                name={signupdata.password}
+                name="password"
                 placeholder="********"
                 className="input input-bordered w-full"
                 required
